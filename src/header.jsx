@@ -34,28 +34,34 @@ export default function Header() {
 
   return (
     <header className="h-screen overflow-hidden relative">
+      {/* IMAGE 1 */}
       <img
         ref={imageRef1}
-        src="./src/assets/photos/big.webp"
+        src="/big.webp"
         alt="Hero 1"
         className="absolute inset-0 h-full w-full object-cover"
         style={{
-          WebkitMaskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 30%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, black 50%, transparent 100%)",
         }}
       />
 
-    <img
-      ref={imageRef2}
-      src="./src/assets/photos/big2.webp"
-      alt="Hero 2"
-      className="absolute h-full w-full object-cover"
-      style={{
-        WebkitMaskImage: "linear-gradient(to bottom, black 30%, transparent 100%)",
-        maskImage: "linear-gradient(to bottom, black 50%, transparent 100%)",
-        transform: "translateX(200px) translateY(200px)", // Exemple : décalée de 200px à droite et 100px vers le bas
-      }}
-    />
+      {/* IMAGE 2 */}
+      <img
+        ref={imageRef2}
+        src="/big2.webp"
+        alt="Hero 2"
+        className="absolute h-full w-full object-cover"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 30%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, black 50%, transparent 100%)",
+          transform: "translateX(200px) translateY(200px)",
+        }}
+      />
 
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white" />
       <div className="relative z-0 flex h-full items-center px-12" />
