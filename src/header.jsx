@@ -36,7 +36,7 @@ export default function Header() {
     <header className="h-screen overflow-hidden relative">
       <img
         ref={imageRef1}
-        src="./src/assets/big.webp"
+        src="./src/assets/photos/big.webp"
         alt="Hero 1"
         className="absolute inset-0 h-full w-full object-cover"
         style={{
@@ -47,7 +47,7 @@ export default function Header() {
 
     <img
       ref={imageRef2}
-      src="./src/assets/big2.webp"
+      src="./src/assets/photos/big2.webp"
       alt="Hero 2"
       className="absolute h-full w-full object-cover"
       style={{
