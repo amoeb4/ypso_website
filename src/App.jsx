@@ -32,9 +32,6 @@ function App() {
     <section id ="informations"><h1>Informations</h1>
         <div/>
     </section>
-<div className="bg-red-500 text-white p-10">
-  TEST
-</div>
     </>
   );
 }

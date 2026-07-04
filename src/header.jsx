@@ -1,67 +1,76 @@
 import { useEffect, useRef } from "react";
 
 export default function Header() {
-  const imageRef1 = useRef(null);
-  const imageRef2 = useRef(null);
+  const imageRefs = useRef([]);
+
+  const images = [
+    "/big.webp",
+    "/big2.webp",
+    "/thumb (2).webp",
+    "/thumb (3).webp",
+    "/thumb (5).webp",
+    "/thumb (6).webp",
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       const scroll = window.scrollY;
 
-      if (imageRef1.current) {
-        const translateX1 = -scroll * 0.8;
-        const scale1 = Math.max(1.15 - scroll * 0.0003, 1);
-        const opacity1 = Math.max(1 - scroll / 600, 0);
+      imageRefs.current.forEach((img, index) => {
+        if (!img) return;
 
-        imageRef1.current.style.transform = `translateX(${translateX1}px) scale(${scale1})`;
-        imageRef1.current.style.opacity = opacity1;
-      }
+        const rawOffset = scroll - index * 500;
 
-      if (imageRef2.current) {
-        const scrollOffset = scroll - 600;
-        const translateX2 = -scrollOffset * 0.8;
-        const scale2 = Math.max(1.15 - scrollOffset * 0.0003, 1);
-        const opacity2 = Math.max(1 - scrollOffset / 600, 0);
+        // on évite les valeurs négatives
+        const progress = Math.max(rawOffset, 0);
 
-        imageRef2.current.style.transform = `translateX(${translateX2}px) scale(${scale2})`;
-        imageRef2.current.style.opacity = opacity2;
-      }
+        // 👉 chaque image démarre plus à droite que la précédente
+        const startX = 300 + index * 120;
+
+        const translateX = startX - progress * 0.8;
+        const translateY = -progress * 0.4 - 80;
+
+        const scale = Math.max(1.15 - progress * 0.0003, 1);
+        const opacity = Math.max(1 - progress / 600, 0);
+
+        img.style.transform = `
+          translate(${translateX}px, ${translateY}px)
+          scale(${scale})
+        `;
+
+        img.style.opacity = opacity;
+      });
     };
 
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   return (
     <header className="h-screen overflow-hidden relative">
-      {/* IMAGE 1 */}
-      <img
-        ref={imageRef1}
-        src="/big.webp"
-        alt="Hero 1"
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 30%, transparent 100%)",
-          maskImage:
-            "linear-gradient(to bottom, black 50%, transparent 100%)",
-        }}
-      />
-
-      {/* IMAGE 2 */}
-      <img
-        ref={imageRef2}
-        src="/big2.webp"
-        alt="Hero 2"
-        className="absolute h-full w-full object-cover"
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 30%, transparent 100%)",
-          maskImage:
-            "linear-gradient(to bottom, black 50%, transparent 100%)",
-          transform: "translateX(200px) translateY(200px)",
-        }}
-      />
+      {images.map((src, index) => (
+        <img
+          key={src}
+          ref={(el) => (imageRefs.current[index] = el)}
+          src={src}
+          alt={`Hero ${index + 1}`}
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{
+            opacity: index === 0 ? 1 : 0,
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 30%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 50%, transparent 100%)",
+          }}
+        />
+      ))}
 
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white" />
       <div className="relative z-0 flex h-full items-center px-12" />
