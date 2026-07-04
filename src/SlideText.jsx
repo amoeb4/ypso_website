@@ -8,16 +8,12 @@ export default function SlideText({ className = "" }) {
     "Ypso Lehnsherr",
     "Entre Blackwork et Neotrad",
     "Résidente chez Chrysalide Tattoo",
-    {
-      type: "location",
-      text: "Angoulême",
-    },
   ];
 
-  const ANIM_HEIGHT = 0.15; // Animation d'arrivée de chaque ligne
-  const SECOND_ANIM_HEIGHT = 0.5; // Animation du bloc vers le haut
+  const ANIM_HEIGHT = 0.15;
+  const SECOND_ANIM_HEIGHT = 0.5;
   const LINE_HEIGHT = 80;
-  const PADDING_RIGHT = 64;
+  const PADDING_RIGHT = 6; // en %
   const TOP_PADDING = 185;
 
   useEffect(() => {
@@ -29,7 +25,6 @@ export default function SlideText({ className = "" }) {
       const secondAnimationHeight =
         window.innerHeight * SECOND_ANIM_HEIGHT;
 
-      // Progression du déplacement final du bloc
       const secondProgress = Math.min(
         Math.max(
           (scrollY - totalFirstAnimation) / secondAnimationHeight,
@@ -37,11 +32,7 @@ export default function SlideText({ className = "" }) {
         ),
         1
       );
-
-      // Easing pour une animation plus fluide
       const ease = 1 - Math.pow(1 - secondProgress, 3);
-
-      // Décalage vertical du bloc entier
       const blockOffsetY =
         secondProgress * (-window.innerHeight / 2 + TOP_PADDING);
 
@@ -59,7 +50,7 @@ export default function SlideText({ className = "" }) {
 
         const endTranslatePx =
           window.innerWidth -
-          PADDING_RIGHT -
+          (PADDING_RIGHT / 100) * window.innerWidth -
           elWidth -
           window.innerWidth / 2;
 
@@ -77,29 +68,35 @@ export default function SlideText({ className = "" }) {
 
         const scale = 0.8 + progress * 0.2;
 
+        // reset propre
         el.style.position = "fixed";
-        el.style.left = "50%";
         el.style.top = "50%";
+        el.style.left = "50%";
         el.style.right = "auto";
 
         if (progress >= 1) {
-          // Le premier titre reste à 1, les autres passent progressivement à 0.7
           const finalScale =
-            i === 0
-              ? 1
-              : 1 - 0.3 * ease;
-
-          el.style.transform = `translate(${endTranslatePx}px, ${
-            finalY + blockOffsetY
-          }px) scale(${finalScale})`;
-
+            i === 0 ? 1 : 1 - 0.3 * ease;
+        
+          // 👉 MODE FINAL CLEAN (colonne droite stable)
+          el.style.left = "auto";
+          el.style.right = "3%";
+          el.style.top = `calc(45.50% + ${finalY + blockOffsetY}px)`;
+        
+          el.style.transform = `scale(${finalScale})`;
+          el.style.transformOrigin = "right center";
+          el.style.display = "flex";
+          el.style.justifyContent = "flex-end";
+          el.style.alignItems = "center";
+          el.style.width = "max-content";
+          el.style.textAlign = "right";
+          el.style.gap = "1px";
           el.style.opacity = "1";
         } else {
-          // Animation d'arrivée
           el.style.transform = `translate(${currentTranslatePx}px, calc(${translateY}% + ${
             progress * finalY
           }px)) scale(${scale})`;
-
+        
           el.style.opacity = progress;
         }
       });
@@ -120,9 +117,7 @@ export default function SlideText({ className = "" }) {
     <div
       className={`relative ${className}`}
       style={{
-        minHeight: `${
-          (items.length * ANIM_HEIGHT + SECOND_ANIM_HEIGHT + 1) * 100
-        }vh`,
+        minHeight: `10h`,
       }}
     >
       {items.map((item, i) => (
@@ -142,11 +137,10 @@ export default function SlideText({ className = "" }) {
             <span className="flex items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
+                viewBox="0 0 24 28"
                 fill="currentColor"
-                className="shrink-0"
-                style={{ width: "1em", height: "1em" }}
-              >
+                className="shrink-0 translate-y-[1em]"
+                style={{ width: "2em", height: "2em" }}>
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
               </svg>
               <span>{item.text}</span>

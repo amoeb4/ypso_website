@@ -66,7 +66,7 @@ export default function SlideBar({ className = "" }) {
   return (
     <div
       className={`relative ${className}`}
-      style={{ minHeight: `${items.length * ANIM_HEIGHT * 100 + 100}vh` }}
+      style={{ minHeight: '10vh' }}
     >
       {items.map((item, i) => (
     <h4
