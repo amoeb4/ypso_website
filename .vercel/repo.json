@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_T7iGDiwrs9iBAKbVSXp8GQjcjehe",
+      "name": "ypso-website",
+      "directory": ".",
+      "orgId": "team_EtSKP5eHNzxMXQVZepQrKION"
+    }
+  ]
+}
