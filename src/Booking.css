@@ -1,0 +1,315 @@
+/* Booking — indépendant de Tailwind et protégé contre les styles globaux de Vite */
+
+.booking {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: #000;
+  color: #fff;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.booking-stage {
+  width: min(100%, 880px);
+  margin: auto;
+  animation: bookingIn 0.8s ease both;
+}
+
+.booking-stage.is-leaving {
+  animation: bookingOut 0.35s ease both;
+}
+
+@keyframes bookingIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bookingOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.booking-title {
+  margin: 0;
+  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.booking-field {
+  display: block;
+  width: 100%;
+  margin: 3rem 0 0;
+  padding: 0;
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  color: #fff;
+  caret-color: #fff;
+  font: inherit;
+  font-size: clamp(1.5rem, 3.6vw, 2.25rem);
+  font-weight: 300;
+  line-height: 1.4;
+  text-align: center;
+  resize: none;
+}
+
+.booking-field::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.booking-field:focus,
+.booking-field:focus-visible {
+  outline: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+textarea.booking-field {
+  min-height: 7.5rem;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+.booking-error {
+  min-height: 1.5rem;
+  margin: 2rem 0 0;
+  font-size: 0.95rem;
+  color: rgba(252, 165, 165, 0.85);
+}
+
+.booking-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.3s ease;
+}
+
+.booking-btn:hover {
+  color: #fff;
+}
+
+.booking-btn:focus-visible {
+  color: #fff;
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.booking-btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.booking-next {
+  margin-top: 1rem;
+}
+
+.booking-next.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.booking-back {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.20rem;
+  font-family: 'Caudex', serif;
+}
+
+.booking-recap {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  max-width: min(55vw, 28rem);
+  text-align: left;
+}
+
+.booking-entry {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.25rem 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  font-size: 1.40rem;
+  font-family: 'Caudex', serif;
+  font-weight: 300;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.booking-entry:hover,
+.booking-entry.is-active {
+  color: #fff;
+}
+
+.booking-entry:focus-visible {
+  color: #fff;
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.booking-thanks {
+  margin: 1.5rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.booking-progress {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.booking-progress > span {
+  display: block;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  transition: width 0.5s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-stage,
+  .booking-stage.is-leaving {
+    animation-duration: 0.01s;
+  }
+  .booking-progress > span {
+    transition: none;
+  }
+}
+
+/* ---- Sélecteur de date et de créneau ---- */
+
+.slot-picker {
+  width: min(100%, 22rem);
+  margin: 2.5rem auto 0;
+}
+
+.slot-month {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.slot-month-label {
+  font-size: 1.1rem;
+  font-weight: 300;
+  text-transform: capitalize;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.15rem;
+  justify-items: center;
+}
+
+.slot-weekday {
+  padding: 0.35rem 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.slot-day,
+.slot-time {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.slot-day {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.slot-day:disabled {
+  color: rgba(255, 255, 255, 0.15);
+  cursor: default;
+}
+
+.slot-day:not(:disabled):hover,
+.slot-time:hover {
+  color: #fff;
+}
+
+.slot-day.is-selected,
+.slot-time.is-selected {
+  background: #fff;
+  color: #000;
+}
+
+.slot-day:focus-visible,
+.slot-time:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
+}
+
+.slot-times {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  margin-top: 1.5rem;
+}
+
+.slot-time {
+  padding: 0.5rem 0.9rem;
+  font-size: 1.05rem;
+}
+
+.slot-note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.slot-note-error {
+  color: rgba(252, 165, 165, 0.85);
+}

@@ -4,7 +4,7 @@ export default function Header() {
   const imageRefs = useRef([]);
 
   const images = [
-    "/big.webp",
+    "/main.webp",
     "/big2.webp",
     "/thumb (2).webp",
     "/thumb (3).webp",
@@ -55,6 +55,7 @@ export default function Header() {
 
   return (
     <header className="h-screen overflow-hidden relative">
+
       {images.map((src, index) => (
         <img
           key={src}

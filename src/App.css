@@ -25,6 +25,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
 nav {
   position: fixed;
   top: 0;
@@ -75,6 +76,7 @@ section {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  cursor: pointer;
 }
 
 .project-box {
@@ -86,4 +88,38 @@ section {
 .project-box h1 {
   color: white;
   margin: 0;
+}
+
+.hero-title {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 50;
+
+  font-family: 'Caudex', serif;
+  font-size: 14px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+  opacity: 0.85;
+
+  pointer-events: none;
+
+  animation: heroFadeIn 1.2s ease-out forwards;
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 0.85;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  text-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
 }
